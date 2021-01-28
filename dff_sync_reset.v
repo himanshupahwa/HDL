@@ -14,12 +14,18 @@ output q;
 reg q;
 
 //-------------Code Starts Here---------
-reg sync_reset;
+reg sync_reset_pos;
+reg sync_reset_neg;
 reg sync_reset_pipe;
 always @ ( posedge clk)
 begin
     sync_reset <= reset;
-    sync_reset_pipe <= sync_reset;
+    sync_reset_pipe <= sync_reset_pos | sync_reset_neg;
+end
+
+always @ ( negedge clk)
+begin
+    sync_reset_neg <= reset;
 end
 
 always @ ( posedge clk)
